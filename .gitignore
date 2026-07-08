@@ -1,0 +1,8 @@
+EO4AreaEstimatesTogo/
+resources/
+claude.md
+.claude/
+.scratch/
+__pycache__/
+stratifiedRandomSampling_outputs/
+*.pyc
