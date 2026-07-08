@@ -181,6 +181,44 @@ def draw_samples(map_path, sample_allocation, out_gpkg, seed=0, v=False):
 
     return gdf
 
+
+def shuffle_samples(gdf, seed=0, out_gpkg=None, v=False):
+    """
+    Randomly shuffle the row order of a sample GeoDataFrame.
+
+    `draw_samples` fills one stratum at a time, so its output is grouped by
+    stratum (e.g. all non-cropland samples, followed by all cropland
+    samples). If units are annotated in that order, an interpreter sees long
+    runs of the same class rather than a properly randomized sequence. This
+    shuffles the sample order (without changing which units were selected)
+    so annotation is not biased by stratum grouping.
+
+    Parameters
+    ----------
+    gdf : gpd.GeoDataFrame
+        Sample GeoDataFrame, e.g. from `draw_samples`.
+    seed : int
+        Random seed for reproducibility.
+    out_gpkg : str, optional
+        If provided, save the shuffled GeoDataFrame to this GeoPackage path
+        (e.g. overwrite the same file `draw_samples` wrote).
+    v : bool
+
+    Returns
+    -------
+    gpd.GeoDataFrame
+        Shuffled copy of `gdf`, with the index reset.
+    """
+    shuffled = gdf.sample(frac=1, random_state=seed).reset_index(drop=True)
+
+    if out_gpkg:
+        shuffled.to_file(out_gpkg, driver="GPKG")
+        if v:
+            print(f"Saved shuffled samples to {out_gpkg}")
+
+    return shuffled
+
+
 def extract_true_class_values(samples_gpkg, crop_map_true, out_gpkg,
                               nodata_class, v=False):
     """

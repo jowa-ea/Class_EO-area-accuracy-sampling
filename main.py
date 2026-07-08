@@ -53,6 +53,8 @@ def main():
 
     pilot_samples_pred_gpkg = os.path.join(srs_outdir, 'pilot_sample.gpkg')
     pilot_samples_pred = srs.draw_samples(crop_map_pred, pilot_allocation, pilot_samples_pred_gpkg, seed=0, v=True)
+    # Shuffle so annotation isn't grouped by stratum (all non-crop, then all crop)
+    pilot_samples_pred = srs.shuffle_samples(pilot_samples_pred, seed=0, out_gpkg=pilot_samples_pred_gpkg)
 
     pilot_samples_true_gpkg = os.path.join(srs_outdir, 'pilot_sample_annotated.gpkg')
     nodata_class = 0
@@ -82,6 +84,8 @@ def main():
     # Step 5. Draw the main sample from the map using the Neyman allocation
     samples_pred_gpkg = os.path.join(srs_outdir, 'stratified_random_sample.gpkg')
     samples_pred = srs.draw_samples(crop_map_pred, allocation, samples_pred_gpkg, seed=0, v=True)
+    # Shuffle so annotation isn't grouped by stratum (all non-crop, then all crop)
+    samples_pred = srs.shuffle_samples(samples_pred, seed=0, out_gpkg=samples_pred_gpkg, v=True)
     print(samples_pred)
     # Here also display as a map visual
 
