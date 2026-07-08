@@ -16,7 +16,7 @@ def plot_togo_layers_geom(layers,
                           map_width="100%",
                           basemap="Esri.WorldImagery"):
     """
-    Plot multiple GeoDataFrame layers (any geometry) over Togo, each with its own color column and palette.
+    Plot multiple GeoDataFrame layers (any geometry) over the Plateaux region of Togo, each with its own color column and palette.
 
     Parameters
     ----------
@@ -41,27 +41,27 @@ def plot_togo_layers_geom(layers,
     if legend_name_list is None:
         legend_name_list = [f"Layer {i + 1}" for i in range(len(layers))]
 
-    # --- Load Togo boundary ---
-    world = gpd.read_file(
-        "https://naturalearth.s3.amazonaws.com/10m_cultural/ne_10m_admin_0_countries.zip"
+    # --- Load AOI boundary (Plateaux region, Togo) ---
+    world1 = gpd.read_file(
+        "https://naturalearth.s3.amazonaws.com/10m_cultural/ne_10m_admin_1_states_provinces.zip"
     )
-    togo = world[world["ADMIN"] == "Togo"]
-    togo = togo.to_crs("ESRI:102022")
-    togo_4326 = togo.to_crs(epsg=4326)
+    aoi = world1[(world1["admin"] == "Togo") & (world1["name"] == "Plateaux")]
+    aoi = aoi.to_crs("ESRI:102022")
+    aoi_4326 = aoi.to_crs(epsg=4326)
 
     # --- Reproject layers ---
     layers_4326 = [gdf.to_crs(epsg=4326) for gdf in layers]
 
     # --- Create map ---
-    bounds = togo_4326.total_bounds
+    bounds = aoi_4326.total_bounds
     center = [(bounds[1] + bounds[3]) / 2, (bounds[0] + bounds[2]) / 2]
     m = folium.Map(location=center, zoom_start=zoom_start, tiles=basemap,
                    width=map_width, height=map_height)
 
-    # --- Add Togo boundary ---
+    # --- Add AOI boundary ---
     folium.GeoJson(
-        togo_4326,
-        name="Togo boundary",
+        aoi_4326,
+        name="Plateaux region boundary",
         style_function=lambda x: {"color": "black", "weight": 2, "fill": False}
     ).add_to(m)
 
@@ -139,7 +139,7 @@ def plot_map(layers,
                               map_width="100%",
                               basemap="Esri.WorldImagery"):
     """
-    Flexible plotting of multiple GeoDataFrame layers over Togo.
+    Flexible plotting of multiple GeoDataFrame layers over the Plateaux region of Togo.
     - Layers can be categorical, continuous, or None (just plot geometries).
     - Palette and color column can be None for default styling.
 
@@ -170,27 +170,27 @@ def plot_map(layers,
     if palette_list is None:
         palette_list = [None] * n_layers
 
-    # --- Load Togo boundary ---
-    world = gpd.read_file(
-        "https://naturalearth.s3.amazonaws.com/10m_cultural/ne_10m_admin_0_countries.zip"
+    # --- Load AOI boundary (Plateaux region, Togo) ---
+    world1 = gpd.read_file(
+        "https://naturalearth.s3.amazonaws.com/10m_cultural/ne_10m_admin_1_states_provinces.zip"
     )
-    togo = world[world["ADMIN"] == "Togo"]
-    togo = togo.to_crs("ESRI:102022")
-    togo_4326 = togo.to_crs(epsg=4326)
+    aoi = world1[(world1["admin"] == "Togo") & (world1["name"] == "Plateaux")]
+    aoi = aoi.to_crs("ESRI:102022")
+    aoi_4326 = aoi.to_crs(epsg=4326)
 
     # --- Reproject layers ---
     layers_4326 = [gdf.to_crs(epsg=4326) for gdf in layers]
 
     # --- Create map ---
-    bounds = togo_4326.total_bounds
+    bounds = aoi_4326.total_bounds
     center = [(bounds[1] + bounds[3]) / 2, (bounds[0] + bounds[2]) / 2]
     m = folium.Map(location=center, zoom_start=zoom_start, tiles=basemap,
                    width=map_width, height=map_height)
 
-    # --- Add Togo boundary ---
+    # --- Add AOI boundary ---
     folium.GeoJson(
-        togo_4326,
-        name="Togo boundary",
+        aoi_4326,
+        name="Plateaux region boundary",
         style_function=lambda x: {"color": "black", "weight": 2, "fill": False}
     ).add_to(m)
 

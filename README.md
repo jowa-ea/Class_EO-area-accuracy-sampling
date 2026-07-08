@@ -56,17 +56,10 @@ included here.
 
 ## Running in Colab
 
-Click the badge above to open the notebook directly in Google Colab. The
-first two setup cells install GDAL and the geospatial Python stack, then
-clone this repository (including `git-lfs` for the demo rasters) into the
-Colab runtime — no local setup required.
-
-This repository is currently **private**, so Colab will prompt you to
-authorize access to your GitHub account the first time you open the badge
-link; only accounts with read access to this repo can open or clone it. To
-share this notebook with students, either add them as collaborators on the
-repo, or make the repo public (Settings → General → Danger Zone → Change
-visibility) so anyone with the link can open it without authorization.
+Click the badge above to open the notebook directly in Google Colab — no
+local setup required. The first two setup cells install GDAL and the
+geospatial Python stack, then clone this (public) repository, including
+`git-lfs` for the demo rasters, into the Colab runtime.
 
 ## Content
 
