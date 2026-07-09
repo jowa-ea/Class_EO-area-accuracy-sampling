@@ -70,6 +70,7 @@ geospatial Python stack, then clone this (public) repository, including
    scripts required to run the notebook.
 4. `main.py` — script equivalent of the notebook, with fewer comments and no
    visualizations.
+5. `stratified_random_sampling_for_map_accuracy_and_area_estimation.pptx` - introduction presentation for sampling exercise
 
 ## Sources
 
